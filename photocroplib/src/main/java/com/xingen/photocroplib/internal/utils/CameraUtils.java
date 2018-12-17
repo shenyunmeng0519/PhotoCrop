@@ -17,7 +17,7 @@ import android.provider.MediaStore;
  * blog博客:http://blog.csdn.net/hexingen
  */
 
- class CameraUtils {
+ public class CameraUtils {
 
     /**
      * 打开相机
@@ -33,6 +33,7 @@ import android.provider.MediaStore;
             if (Build.VERSION.SDK_INT >= 24) {
                 intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
             }
+
             context.startActivityForResult(intent, requestCode);
         }
     }

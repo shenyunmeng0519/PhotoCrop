@@ -13,7 +13,7 @@ import java.lang.reflect.Field;
  * blog博客:http://blog.csdn.net/hexingen
  */
 
-class UriUtils {
+public class UriUtils {
 
     /**
      * 生成File文件路径对应的Uri

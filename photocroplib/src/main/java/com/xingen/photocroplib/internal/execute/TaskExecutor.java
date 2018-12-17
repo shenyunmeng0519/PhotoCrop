@@ -1,5 +1,6 @@
 package com.xingen.photocroplib.internal.execute;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 
@@ -31,6 +32,14 @@ public abstract class TaskExecutor {
      * @return
      */
     public abstract  PhotoTask queryTask(int requestCode, int resultCode, Intent intent);
+
+    /**
+     * 处理权限结果
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
+    public abstract  void handlePermissionResult(int requestCode, String[] permissions, int[] grantResults);
 
 
     /**

@@ -6,18 +6,17 @@ import android.os.Build;
 import android.support.v4.content.ContextCompat;
 
 /**
- * Created by ${HeXinGen} on 2018/12/16.
- * blog博客:http://blog.csdn.net/hexingen
+ * @author HeXinGen
+ * date 2018/12/17.
  */
-
- class PermissionUtils {
+public class PermissionUtils {
     /**
      * 检查申请到权限
      * @param context
      * @param permissions
      * @return
      */
-    public static boolean hansPermission(Context context,String ...permissions){
+    public static boolean hasPermission(Context context, String ...permissions){
         if (Build.VERSION.SDK_INT<Build.VERSION_CODES.M){
             return true;
         }
@@ -28,15 +27,4 @@ import android.support.v4.content.ContextCompat;
         }
         return true;
     }
-
-
-
-
-
-
-
-
-
-
-
 }
