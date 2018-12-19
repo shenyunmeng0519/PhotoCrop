@@ -10,7 +10,7 @@ import android.media.ExifInterface;
  * blog博客:http://blog.csdn.net/hexingen
  */
 
-public class FileBitmapUtils {
+public final class FileBitmapUtils {
 
     private final static Object lock = new Object();
 
@@ -27,11 +27,11 @@ public class FileBitmapUtils {
         //防止同时解压多个，造成内存溢出
         synchronized (lock) {
             bitmap = BitmapFactory.decodeFile(filePath, options);
-            return FileRotateUtils.repairBitmapRotate(bitmap,filePath);
+            return FileRotateUtils.repairBitmapRotate(bitmap, filePath);
         }
     }
 
-    private final  static  class  FileRotateUtils{
+    private final static class FileRotateUtils {
         /**
          * 修复某些图片旋转问题，从而调整
          * 这种情况，存在于某些手机拍照，生成反向的图片
@@ -65,9 +65,12 @@ public class FileBitmapUtils {
             }
             return normalBitmap;
         }
+
         /**
          * ExifInterface ：这个类为jpeg文件记录一些image 的标记
          * 这里，获取图片的旋转角度
+         * <p>
+         * Exif可以附加于JPEG、TIFF、RIFF等文件之中, PNG，WebP这类的图片就不会有这些数据。
          *
          * @param path
          * @return
@@ -75,20 +78,22 @@ public class FileBitmapUtils {
         private static int getBitmapRotate(String path) {
             int degree = 0;
             try {
-                ExifInterface exifInterface = new ExifInterface(path);
-                int orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
-                switch (orientation) {
-                    case ExifInterface.ORIENTATION_ROTATE_90:
-                        degree = 90;
-                        break;
-                    case ExifInterface.ORIENTATION_ROTATE_180:
-                        degree = 180;
-                        break;
-                    case ExifInterface.ORIENTATION_ROTATE_270:
-                        degree = 270;
-                        break;
-                    default:
-                        break;
+                if (path.contains(".jpeg") || path.contains(".JPEG")) {
+                    ExifInterface exifInterface = new ExifInterface(path);
+                    int orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+                    switch (orientation) {
+                        case ExifInterface.ORIENTATION_ROTATE_90:
+                            degree = 90;
+                            break;
+                        case ExifInterface.ORIENTATION_ROTATE_180:
+                            degree = 180;
+                            break;
+                        case ExifInterface.ORIENTATION_ROTATE_270:
+                            degree = 270;
+                            break;
+                        default:
+                            break;
+                    }
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -96,6 +101,7 @@ public class FileBitmapUtils {
             return degree;
         }
     }
+
     private final static class BitmapScaleUtils {
         /**
          * 计算合适的压缩值

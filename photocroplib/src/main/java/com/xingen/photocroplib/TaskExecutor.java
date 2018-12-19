@@ -1,11 +1,14 @@
-package com.xingen.photocroplib.internal.execute;
+package com.xingen.photocroplib;
 
+
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.support.v4.app.Fragment;
 
-import com.xingen.photocroplib.PhotoTask;
 import com.xingen.photocroplib.internal.listener.BitmapListener;
+import com.xingen.photocroplib.internal.listener.PermissionListener;
 
 /**
  * Created by ${HeXinGen} on 2018/12/16.
@@ -13,17 +16,23 @@ import com.xingen.photocroplib.internal.listener.BitmapListener;
  */
 
 public abstract class TaskExecutor {
-
     public static TaskExecutor getInstance(){
         return TaskExecutorImpl.getInstance();
     }
 
     /**
+     * 初始化
+     * @param context
+     */
+    public  abstract void init(Context context);
+    /**
      * 执行任务
      * @param task
+     * @param context
      */
-    public  abstract  void execute(PhotoTask task);
+    public  abstract  void execute(Activity context, Task task);
 
+    public  abstract  void execute(Fragment fragment, Task task);
     /**
      * 查询任务
      * @param requestCode
@@ -31,17 +40,25 @@ public abstract class TaskExecutor {
      * @param intent
      * @return
      */
-    public abstract  PhotoTask queryTask(int requestCode, int resultCode, Intent intent);
+    public abstract Task queryTask(int requestCode, int resultCode, Intent intent);
 
     /**
-     * 处理权限结果
+     * 处理读写权限的结果
      * @param requestCode
      * @param permissions
      * @param grantResults
      */
-    public abstract  void handlePermissionResult(int requestCode, String[] permissions, int[] grantResults);
+    public abstract  void handleWritePermission(int requestCode, String[] permissions, int[] grantResults, PermissionListener listener);
 
 
+    /**
+     * 请求读写权限
+     * @param activity
+     * @return
+     */
+    public abstract boolean requestWritePermission(Activity activity);
+
+    public abstract boolean requestWritePermission(Fragment fragment);
     /**
      * 同步加载
      * @param filePath
