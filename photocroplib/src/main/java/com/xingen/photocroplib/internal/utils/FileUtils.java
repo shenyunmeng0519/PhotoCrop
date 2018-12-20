@@ -12,14 +12,13 @@ import java.util.Date;
  * @author HeXinGen
  * date 2018/12/19.
  */
-public class FileUtils {
+public final class FileUtils {
     public static final String bitmapFormat = ".png";
     /**
      * 创建图片的绝对路径
      * getExternalFilesDir()提供的是私有的目录，在app卸载后会被删除
      *
      * @param context
-     * @param
      * @return
      */
     public static String createPhotoPath(Context context) {

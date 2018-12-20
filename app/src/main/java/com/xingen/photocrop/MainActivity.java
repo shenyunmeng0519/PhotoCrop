@@ -41,7 +41,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void initWritePermission() {
         boolean result = TaskExecutor.getInstance().requestWritePermission(this);
     }
-
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -53,9 +52,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 TaskExecutor.getInstance().execute(this, Task.createGalleryTask());
                 break;
         }
-
     }
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -63,7 +60,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Toast.makeText(getApplicationContext(), "读写权限" + (result ? "授权成功" : "被拒绝"), Toast.LENGTH_SHORT).show();
         });
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
